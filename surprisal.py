@@ -11,7 +11,7 @@ import bs4
 from transformers import pipeline
 import jinja2
 
-nlp = pipeline("question-answering")
+# nlp = pipeline("question-answering")
 
 # import sentence_transformers
 
@@ -68,15 +68,15 @@ with open("stopwords.txt") as f:
 index = {}
 words_with_context = []
 
-for i, filename in enumerate(os.listdir("_posts")):
-    print(i, len(os.listdir("_posts")))
+for i, filename in enumerate(os.listdir("../_posts")):
+    print(i, len(os.listdir("../_posts")))
     try:
         if not filename.endswith(".md"):
             continue
 
-        title = frontmatter.load("_posts/" + filename).metadata.get("title", filename)
+        title = frontmatter.load("../_posts/" + filename).metadata.get("title", filename)
 
-        input_prose = frontmatter.load("_posts/" + filename).content
+        input_prose = frontmatter.load("../_posts/" + filename).content
 
         input_prose_text = input_prose
 
@@ -199,19 +199,19 @@ with open("index.json", "w") as f:
 
 dl_dds = []
 
-for word, filename, text in words_with_context:
-    # normalize words_with_context[w] to a big string, no new lines
-    if contexts.get(filename, None) is None:
-        contexts[filename] = {}
+# for word, filename, text in words_with_context:
+#     # normalize words_with_context[w] to a big string, no new lines
+#     if contexts.get(filename, None) is None:
+#         contexts[filename] = {}
 
-    if contexts[filename].get(word, None) is None:
-        contexts[filename][word] = text.replace("\n", " ")
+#     if contexts[filename].get(word, None) is None:
+#         contexts[filename][word] = text.replace("\n", " ")
 
-    contexts[filename][word] = nlp(
-        question=f"question: what is the context of {word}, summarized like a book index?",
-        context=contexts[filename][word],
-    )["answer"]
-    print(filename, word, contexts[filename][word])
+#     contexts[filename][word] = nlp(
+#         question=f"question: what is the context of {word}, summarized like a book index?",
+#         context=contexts[filename][word],
+#     )["answer"]
+#     print(filename, word, contexts[filename][word])
 
 for word, filenames in index.items():
     dl = "<dl><dt>" + word + "</dt><dd><ul>"
