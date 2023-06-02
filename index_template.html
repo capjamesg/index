@@ -69,6 +69,24 @@
             dd {
                 width: 80%;
             }
+            #index {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            @media (max-width: 600px) {
+                dl {
+                    flex-direction: column;
+                    margin-right: 10px;
+                }
+                dt {
+                    width: 100%;
+                }
+                dd {
+                    width: 100%;
+                }
+            }
         </style>
         <nav>
             <ul>
@@ -79,6 +97,11 @@
         <main>
             <h1>Index</h1>
             <p>Below is the index for <a href="https://jamesg.blog">jamesg.blog</a>.</p>
+            <ul id="index">
+                {% for letter in letters_in_index %}
+                    <li><a href="#{{letter}}">{{letter}}</a></li>
+                {% endfor %}
+            </ul>
             {{results}}
         </main>
     </body>
